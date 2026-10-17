@@ -9,7 +9,6 @@ import ComparisonTable from './components/ComparisonTable';
 import DownloadSection from './components/DownloadSection';
 import InstallGuide from './components/InstallGuide';
 import FAQ from './components/FAQ';
-import FeedbackBanner from './components/FeedbackBanner';
 import Footer from './components/Footer';
 import ScreenshotModal from './components/ScreenshotModal';
 
@@ -75,11 +74,8 @@ export default function App() {
         {/* 8. Panduan 3 Langkah Instalasi */}
         <InstallGuide />
 
-        {/* 9. FAQ Populer */}
+        {/* 9. FAQ & Kotak Masukan Rental */}
         <FAQ />
-
-        {/* 10. Feedback & Feature Requests Section */}
-        <FeedbackBanner />
       </main>
 
       {/* Footer */}
