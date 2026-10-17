@@ -12,10 +12,12 @@ export default function DownloadSection() {
 
   const APK_FILE = '/apk/camprent_V1.0.0.apk';
   const APK_FILENAME = 'camprent_V1.0.0.apk';
+  const PRODUCTION_DOMAIN = 'https://camp-rent-web.vercel.app';
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const origin = window.location.origin;
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const origin = isLocal ? PRODUCTION_DOMAIN : window.location.origin;
       setQrUrl(`${origin}${APK_FILE}`);
     }
   }, []);
@@ -48,7 +50,8 @@ export default function DownloadSection() {
   };
 
   const handleCopyLink = () => {
-    const origin = typeof window !== 'undefined' && window.location ? window.location.origin : 'https://camp-rent-web.vercel.app';
+    const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    const origin = typeof window !== 'undefined' && !isLocal ? window.location.origin : PRODUCTION_DOMAIN;
     const apkUrl = `${origin}${APK_FILE}`;
     navigator.clipboard?.writeText(apkUrl);
     setCopied(true);
@@ -215,8 +218,8 @@ export default function DownloadSection() {
               </div>
 
               {/* URL preview */}
-              <p className="mt-2.5 text-[10px] text-zinc-400 font-mono truncate max-w-[220px]" title={qrUrl}>
-                {qrUrl || '/apk/camprent_V1.0.0.apk'}
+              <p className="mt-2.5 text-[10px] text-zinc-400 font-mono truncate max-w-[220px]" title={qrUrl || `${PRODUCTION_DOMAIN}${APK_FILE}`}>
+                {qrUrl || `${PRODUCTION_DOMAIN}${APK_FILE}`}
               </p>
 
               {/* Copy URL trigger */}
