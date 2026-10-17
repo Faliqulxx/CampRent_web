@@ -11,8 +11,12 @@ import InstallGuide from './components/InstallGuide';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import ScreenshotModal from './components/ScreenshotModal';
+import MaintenanceModal from './components/MaintenanceModal';
 
 export default function App() {
+  // Popup besar otomatis terbuka saat web pertama kali dibuka
+  const [isMaintenanceOpen, setIsMaintenanceOpen] = useState(true);
+
   const [modalState, setModalState] = useState({
     isOpen: false,
     imageSrc: '',
@@ -34,9 +38,18 @@ export default function App() {
   };
 
   const handleDownloadClick = () => {
+    // Tampilkan popup informasi bahwa APK sedang dalam perbaikan
+    setIsMaintenanceOpen(true);
     const downloadElement = document.getElementById('download');
     if (downloadElement) {
       downloadElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleFeedbackClick = () => {
+    const faqElement = document.getElementById('faq');
+    if (faqElement) {
+      faqElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -68,14 +81,14 @@ export default function App() {
         {/* 6. Tabel Perbandingan Retail Biasa vs CampRent */}
         <ComparisonTable />
 
-        {/* 7. Download APK & Spesifikasi */}
-        <DownloadSection />
+        {/* 7. Download APK & Spesifikasi (Status Maintenance) */}
+        <DownloadSection onOpenMaintenance={() => setIsMaintenanceOpen(true)} />
 
         {/* 8. Panduan 3 Langkah Instalasi */}
         <InstallGuide />
 
         {/* 9. FAQ & Kotak Masukan Rental */}
-        <FAQ />
+        <FAQ onDownloadClick={handleDownloadClick} />
       </main>
 
       {/* Footer */}
@@ -88,6 +101,13 @@ export default function App() {
         imageSrc={modalState.imageSrc}
         title={modalState.title}
         subtitle={modalState.subtitle}
+      />
+
+      {/* Popup Besar Saat Web Dibuka: Info APK Sedang Dalam Perbaikan & Penambahan Fitur */}
+      <MaintenanceModal
+        isOpen={isMaintenanceOpen}
+        onClose={() => setIsMaintenanceOpen(false)}
+        onFeedbackClick={handleFeedbackClick}
       />
     </div>
   );

@@ -11,11 +11,12 @@ import {
   Store, 
   Clock,
   ExternalLink,
-  Download 
+  Download,
+  AlertTriangle 
 } from 'lucide-react';
 import MountainSilhouette from './MountainSilhouette';
 
-export default function FAQ() {
+export default function FAQ({ onDownloadClick }) {
   const [openIndex, setOpenIndex] = useState(0);
 
   // Form State
@@ -277,13 +278,16 @@ export default function FAQ() {
                 <span className="text-zinc-400 text-[11px]">
                   Siap beralih dari pencatatan manual?
                 </span>
-                <a
-                  href="#download"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-md shadow-emerald-950/40 active:scale-[0.98]"
+                <button
+                  onClick={onDownloadClick ? onDownloadClick : () => {
+                    const downloadEl = document.getElementById('download');
+                    if (downloadEl) downloadEl.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-zinc-900 border border-amber-500/40 hover:bg-zinc-800 text-amber-300 font-bold text-xs transition-all shadow-md active:scale-[0.98]"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download File APK</span>
-                </a>
+                  <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Status APK (Sedang Perbaikan)</span>
+                </button>
               </div>
 
             </div>
