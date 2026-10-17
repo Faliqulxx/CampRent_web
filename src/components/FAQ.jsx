@@ -9,6 +9,7 @@ import {
   MessageCircle, 
   User, 
   Store, 
+  Clock,
   ExternalLink,
   Download 
 } from 'lucide-react';
