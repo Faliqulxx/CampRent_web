@@ -9,9 +9,10 @@ import {
   MessageCircle, 
   User, 
   Store, 
-  Clock, 
-  ExternalLink 
+  ExternalLink,
+  Download 
 } from 'lucide-react';
+import MountainSilhouette from './MountainSilhouette';
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
@@ -213,6 +214,77 @@ export default function FAQ() {
                   </div>
                 );
               })}
+            </div>
+
+            {/* CampRent Logo Brand Card filling the empty space */}
+            <div className="mt-5 rounded-3xl bg-gradient-to-br from-emerald-950 via-zinc-950 to-zinc-900 text-white p-6 sm:p-7 border border-emerald-900/50 shadow-xl relative overflow-hidden">
+              
+              {/* Subtle mountain background */}
+              <div className="absolute -bottom-2 left-0 right-0 pointer-events-none z-0">
+                <MountainSilhouette opacity="0.08" className="w-full text-emerald-400" />
+              </div>
+
+              {/* Decorative radial glow */}
+              <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
+                {/* Official Logo with glowing border */}
+                <div className="relative shrink-0">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-emerald-500/40 shadow-xl shadow-emerald-950/60 bg-zinc-900 flex items-center justify-center p-1 bg-white/5">
+                    <img
+                      src="/image/camprent_logo.jpg"
+                      alt="CampRent Official Logo"
+                      className="w-full h-full object-cover rounded-xl"
+                    />
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded-full bg-emerald-500 text-zinc-950 font-black text-[9px] uppercase tracking-wider shadow">
+                    Official
+                  </div>
+                </div>
+
+                {/* Brand description & pills */}
+                <div className="space-y-2 flex-1">
+                  <div className="flex items-center justify-center sm:justify-start gap-2">
+                    <span className="text-base sm:text-lg font-black text-white tracking-tight">
+                      CampRent <span className="text-emerald-400 font-extrabold">POS</span>
+                    </span>
+                    <span className="text-[10px] font-bold bg-emerald-900/80 text-emerald-300 border border-emerald-700/60 px-2 py-0.5 rounded-full">
+                      v1.0.0 Stable
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-zinc-300 leading-relaxed font-normal">
+                    Aplikasi kasir &amp; manajemen persewaan tenda serta perlengkapan outdoor terlengkap. Siap bekerja tanpa koneksi internet di basecamp maupun toko kota.
+                  </p>
+
+                  <div className="flex flex-wrap justify-center sm:justify-start gap-1.5 pt-1 text-[11px]">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-zinc-300">
+                      🏕️ Khusus Rental Outdoor
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-zinc-300">
+                      📶 Offline-First SQLite
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-zinc-300">
+                      🏷️ Bebas Biaya Bulanan
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom quick CTA link */}
+              <div className="relative z-10 pt-4 mt-4 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                <span className="text-zinc-400 text-[11px]">
+                  Siap beralih dari pencatatan manual?
+                </span>
+                <a
+                  href="#download"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-md shadow-emerald-950/40 active:scale-[0.98]"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download File APK</span>
+                </a>
+              </div>
+
             </div>
           </div>
 
