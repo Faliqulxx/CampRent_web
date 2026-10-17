@@ -8,7 +8,7 @@ export default function InstallGuide() {
       title: 'Langkah 1 — Unduh File APK',
       subtitle: 'Melalui Browser Android',
       description: 'Klik tombol "Download APK" di atas menggunakan Google Chrome atau browser bawaan perangkat Android Anda.',
-      detail: 'File instalasi bernama "camprent_V1.0.0.apk" berukuran ~28.9 MB akan diunduh ke folder Downloads ponsel.',
+      detail: 'File instalasi bernama "camprent_V1.1.apk" (atau v1.0.0) berukuran ~28.9 MB akan diunduh ke folder Downloads ponsel.',
       icon: Download,
       badge: 'Proses Cepat'
     },

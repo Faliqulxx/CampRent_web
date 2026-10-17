@@ -49,11 +49,13 @@ export default function Hero({ onDownloadClick, onOpenModal }) {
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
               <button
                 onClick={onDownloadClick}
-                className="w-full sm:w-auto px-6 py-3.5 text-xs font-bold text-white bg-zinc-950 hover:bg-zinc-900 border border-amber-500/40 rounded-xl transition-all duration-200 flex items-center justify-center gap-2.5 active:scale-[0.98] shadow-md shadow-zinc-900/10 group"
+                className="w-full sm:w-auto px-6 py-3.5 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-600 rounded-xl transition-all duration-200 flex items-center justify-center gap-2.5 active:scale-[0.98] shadow-lg shadow-emerald-950/20 group cursor-pointer"
               >
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-                <Download className="w-4 h-4 stroke-[2]" />
-                <span>Unduh APK (Sedang Maintenance)</span>
+                <Download className="w-4 h-4 stroke-[2.5] group-hover:translate-y-0.5 transition-transform" />
+                <span>Unduh APK (v1.1 Terbaru)</span>
+                <span className="text-[10px] bg-white/20 text-white font-extrabold px-1.5 py-0.5 rounded">
+                  Gratis
+                </span>
               </button>
 
               <a

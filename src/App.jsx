@@ -14,8 +14,8 @@ import ScreenshotModal from './components/ScreenshotModal';
 import MaintenanceModal from './components/MaintenanceModal';
 
 export default function App() {
-  // Popup besar otomatis terbuka saat web pertama kali dibuka
-  const [isMaintenanceOpen, setIsMaintenanceOpen] = useState(true);
+  // Status maintenance telah dibuka, download aktif
+  const [isMaintenanceOpen, setIsMaintenanceOpen] = useState(false);
 
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -38,8 +38,7 @@ export default function App() {
   };
 
   const handleDownloadClick = () => {
-    // Tampilkan popup informasi bahwa APK sedang dalam perbaikan
-    setIsMaintenanceOpen(true);
+    // Arahkan langsung ke bagian Download APK
     const downloadElement = document.getElementById('download');
     if (downloadElement) {
       downloadElement.scrollIntoView({ behavior: 'smooth' });
@@ -81,8 +80,8 @@ export default function App() {
         {/* 6. Tabel Perbandingan Retail Biasa vs CampRent */}
         <ComparisonTable />
 
-        {/* 7. Download APK & Spesifikasi (Status Maintenance) */}
-        <DownloadSection onOpenMaintenance={() => setIsMaintenanceOpen(true)} />
+        {/* 7. Download APK & Spesifikasi (v1.1 & v1.0.0 Aktif) */}
+        <DownloadSection onOpenChangelog={() => setIsMaintenanceOpen(true)} />
 
         {/* 8. Panduan 3 Langkah Instalasi */}
         <InstallGuide />

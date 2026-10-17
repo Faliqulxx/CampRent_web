@@ -47,7 +47,7 @@ export default function Navbar({ onDownloadClick }) {
                   CampRent<span className="text-emerald-700 font-bold">POS</span>
                 </span>
                 <span className="px-1.5 py-0.5 text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 rounded">
-                  v1.0
+                  v1.1
                 </span>
               </div>
               <p className="text-[10px] text-zinc-500 tracking-wider uppercase font-medium">
@@ -92,13 +92,12 @@ export default function Navbar({ onDownloadClick }) {
 
             <button
               onClick={onDownloadClick}
-              className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-amber-300 bg-zinc-950 hover:bg-zinc-900 border border-amber-500/40 rounded-lg transition-colors active:scale-95 shadow-sm"
+              className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-600 rounded-lg transition-all active:scale-95 shadow-sm shadow-emerald-950/20"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-              <Download className="w-3.5 h-3.5 stroke-[2.5] text-amber-400" />
+              <Download className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Unduh APK</span>
-              <span className="text-[9px] font-bold uppercase bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/30">
-                Perbaikan
+              <span className="text-[9px] font-bold uppercase bg-white/20 text-white px-1.5 py-0.5 rounded">
+                v1.1
               </span>
             </button>
           </div>
@@ -145,10 +144,10 @@ export default function Navbar({ onDownloadClick }) {
                 setMobileMenuOpen(false);
                 onDownloadClick();
               }}
-              className="w-full py-2.5 px-4 text-center text-xs font-bold text-amber-200 bg-zinc-950 hover:bg-zinc-900 border border-amber-500/40 rounded-lg flex items-center justify-center gap-2 shadow-sm"
+              className="w-full py-2.5 px-4 text-center text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-600 rounded-lg flex items-center justify-center gap-2 shadow-sm"
             >
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-              <span>Unduh APK (Sedang Maintenance)</span>
+              <Download className="w-4 h-4" />
+              <span>Unduh APK (v1.1 &amp; v1.0.0 Siap)</span>
             </button>
             <a
               href="https://faliq-portfolio.vercel.app/"
