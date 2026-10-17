@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Download, HardDrive, Cpu, Tablet, ShieldCheck, Check, Copy } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import MountainSilhouette from './MountainSilhouette';
+import PortfolioAdModal from './PortfolioAdModal';
 
 export default function DownloadSection() {
+  const [showAdModal, setShowAdModal] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [downloadComplete, setDownloadComplete] = useState(false);
@@ -32,21 +34,7 @@ export default function DownloadSection() {
   };
 
   const handleDownload = () => {
-    setDownloading(true);
-    setDownloadProgress(0);
-    setDownloadComplete(false);
-
-    let currentProgress = 0;
-    const interval = setInterval(() => {
-      currentProgress += 25;
-      setDownloadProgress(currentProgress);
-      if (currentProgress >= 100) {
-        clearInterval(interval);
-        setDownloading(false);
-        setDownloadComplete(true);
-        triggerFileDownload();
-      }
-    }, 150);
+    setShowAdModal(true);
   };
 
   const handleCopyLink = () => {
@@ -237,6 +225,16 @@ export default function DownloadSection() {
         </div>
 
       </div>
+
+      {/* 20-Second Portfolio Showcase Ad Modal */}
+      <PortfolioAdModal
+        isOpen={showAdModal}
+        onClose={() => setShowAdModal(false)}
+        onDownloadTrigger={() => {
+          triggerFileDownload();
+          setDownloadComplete(true);
+        }}
+      />
     </section>
   );
 }
