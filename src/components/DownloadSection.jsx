@@ -48,7 +48,7 @@ export default function DownloadSection() {
   };
 
   const handleCopyLink = () => {
-    const origin = typeof window !== 'undefined' && window.location ? window.location.origin : 'https://camprent-pos.vercel.app';
+    const origin = typeof window !== 'undefined' && window.location ? window.location.origin : 'https://camp-rent-web.vercel.app';
     const apkUrl = `${origin}${APK_FILE}`;
     navigator.clipboard?.writeText(apkUrl);
     setCopied(true);
@@ -199,7 +199,7 @@ export default function DownloadSection() {
               {/* Real, functional QR Code */}
               <div className="p-3 bg-white rounded-2xl shadow-xl flex items-center justify-center relative border-2 border-emerald-500/20">
                 <QRCodeSVG
-                  value={qrUrl || `https://camprent-pos.vercel.app${APK_FILE}`}
+                  value={qrUrl || `https://camp-rent-web.vercel.app${APK_FILE}`}
                   size={144}
                   bgColor="#ffffff"
                   fgColor="#022c22"
