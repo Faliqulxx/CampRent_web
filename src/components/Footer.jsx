@@ -1,9 +1,25 @@
 import React from 'react';
-import { ArrowUp, User, ShieldCheck, ExternalLink, MessageSquarePlus } from 'lucide-react';
+import { ArrowUp, User, ShieldCheck, ExternalLink, MessageSquarePlus, Image as ImageIcon } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ currentPath = '/', onNavigate }) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLinkClick = (e, href) => {
+    e.preventDefault();
+    if (currentPath !== '/') {
+      if (onNavigate) onNavigate('/');
+      setTimeout(() => {
+        const targetId = href.replace('#', '');
+        const elem = document.getElementById(targetId);
+        if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const targetId = href.replace('#', '');
+      const elem = document.getElementById(targetId);
+      if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -47,19 +63,62 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <a href="#solusi" className="hover:text-emerald-400 transition-colors">Masalah &amp; Solusi Rental</a>
+                <a
+                  href="/tools/image-compressor"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigate) onNavigate('/tools/image-compressor');
+                  }}
+                  className="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1.5"
+                >
+                  <ImageIcon className="w-3.5 h-3.5" />
+                  <span>Image Compressor (1:1 WebP)</span>
+                </a>
               </li>
               <li>
-                <a href="#fitur" className="hover:text-emerald-400 transition-colors">5 Fitur Utama All-in-One</a>
+                <a
+                  href="#solusi"
+                  onClick={(e) => handleLinkClick(e, '#solusi')}
+                  className="hover:text-emerald-400 transition-colors"
+                >
+                  Masalah &amp; Solusi Rental
+                </a>
               </li>
               <li>
-                <a href="#roles" className="hover:text-emerald-400 transition-colors">Hak Akses Owner &amp; Kasir</a>
+                <a
+                  href="#fitur"
+                  onClick={(e) => handleLinkClick(e, '#fitur')}
+                  className="hover:text-emerald-400 transition-colors"
+                >
+                  5 Fitur Utama All-in-One
+                </a>
               </li>
               <li>
-                <a href="#perbandingan" className="hover:text-emerald-400 transition-colors">Tabel Perbandingan</a>
+                <a
+                  href="#roles"
+                  onClick={(e) => handleLinkClick(e, '#roles')}
+                  className="hover:text-emerald-400 transition-colors"
+                >
+                  Hak Akses Owner &amp; Kasir
+                </a>
               </li>
               <li>
-                <a href="#download" className="hover:text-emerald-400 transition-colors">Download File APK</a>
+                <a
+                  href="#perbandingan"
+                  onClick={(e) => handleLinkClick(e, '#perbandingan')}
+                  className="hover:text-emerald-400 transition-colors"
+                >
+                  Tabel Perbandingan
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#download"
+                  onClick={(e) => handleLinkClick(e, '#download')}
+                  className="hover:text-emerald-400 transition-colors"
+                >
+                  Download File APK
+                </a>
               </li>
             </ul>
           </div>
@@ -94,12 +153,20 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#panduan" className="hover:text-emerald-400 transition-colors">
+                <a
+                  href="#panduan"
+                  onClick={(e) => handleLinkClick(e, '#panduan')}
+                  className="hover:text-emerald-400 transition-colors"
+                >
                   Panduan Pemasangan di Android
                 </a>
               </li>
               <li>
-                <a href="#faq" className="hover:text-emerald-400 transition-colors">
+                <a
+                  href="#faq"
+                  onClick={(e) => handleLinkClick(e, '#faq')}
+                  className="hover:text-emerald-400 transition-colors"
+                >
                   Tanya Jawab Populer (FAQ)
                 </a>
               </li>
@@ -117,7 +184,7 @@ export default function Footer() {
           <div className="flex items-center gap-4">
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-1 text-zinc-400 hover:text-emerald-400 transition-colors font-medium"
+              className="flex items-center gap-1 text-zinc-400 hover:text-emerald-400 transition-colors font-medium cursor-pointer"
             >
               <span>Ke Atas</span>
               <ArrowUp className="w-3.5 h-3.5" />

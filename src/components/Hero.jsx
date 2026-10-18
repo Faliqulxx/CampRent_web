@@ -1,8 +1,128 @@
-import React from 'react';
-import { Download, BookOpen, ExternalLink, ChevronRight, Zap, WifiOff, Printer, ShieldCheck, Layers } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  Download,
+  BookOpen,
+  ExternalLink,
+  ChevronRight,
+  ChevronLeft,
+  Zap,
+  WifiOff,
+  Printer,
+  ShieldCheck,
+  Layers,
+  Sparkles,
+} from 'lucide-react';
 import MountainSilhouette from './MountainSilhouette';
 
+// Urutan screenshot CampRent POS: 0.webp -> A1 s.d A6 -> K1 s.d K5
+const APK_SCREENSHOTS = [
+  {
+    src: '/image/0.webp',
+    tag: 'Login & Offline',
+    title: 'CampRent POS Login & Offline-Ready',
+    subtitle: 'Antarmuka Login Aman dengan dukungan SQLite Offline-First',
+  },
+  {
+    src: '/image/A1.webp',
+    tag: 'Owner Dashboard',
+    title: 'Dashboard Utama Rental Outdoor',
+    subtitle: 'Ringkasan Aktivitas Toko, Sewa Aktif & Kas Harian',
+  },
+  {
+    src: '/image/A2.webp',
+    tag: 'Monitoring Overdue',
+    title: 'Laporan Keterlambatan & Piutang Sewa',
+    subtitle: 'Deteksi Unit Terlambat Kembali & Hitungan Denda Otomatis',
+  },
+  {
+    src: '/image/A3.webp',
+    tag: 'Inventori Alat',
+    title: 'Manajemen Inventori & Varian Alat Camping',
+    subtitle: 'Pengaturan Stok, Tarif Harian & Kategori Sewa Toko',
+  },
+  {
+    src: '/image/A4.webp',
+    tag: 'Jaminan Fisik',
+    title: 'Detail Transaksi & Monitoring Jaminan',
+    subtitle: 'Pengawasan KTP, SIM & Deposit Tunai Pelanggan',
+  },
+  {
+    src: '/image/A5.webp',
+    tag: 'Laporan Finansial',
+    title: 'Laporan Keuangan & Omzet Real-Time',
+    subtitle: 'Rekap Pembayaran Tunai, Transfer Bank, QRIS & Denda',
+  },
+  {
+    src: '/image/A6.webp',
+    tag: 'Audit Shift',
+    title: 'Pusat Audit Seluruh Shift Kasir',
+    subtitle: 'Pemantauan Jam Buka-Tutup Kasir & Rekonsiliasi Laci',
+  },
+  {
+    src: '/image/K1.webp',
+    tag: 'Buka Shift Kasir',
+    title: 'Proteksi Buka Shift Kasir (Shift Guard)',
+    subtitle: 'Pencatatan Modal Receh Awal Laci & Kunci Transaksi',
+  },
+  {
+    src: '/image/K2.webp',
+    tag: 'Floating Cart',
+    title: 'Katalog Kasir & Floating Cart Otomatis',
+    subtitle: 'Kalkulator Pembayaran Cepat, DP Minimum & Kembalian',
+  },
+  {
+    src: '/image/K3.webp',
+    tag: 'Inspeksi Kembali',
+    title: 'Modal Inspeksi Kondisi Alat Pengembalian',
+    subtitle: 'Cek Alat Bersih, Denda Kotor, atau Servis Rusak/Hilang',
+  },
+  {
+    src: '/image/K4.webp',
+    tag: 'Tutup Shift',
+    title: 'Rekonsiliasi Tutup Shift Kasir',
+    subtitle: 'Validasi Uang Fisik di Laci vs Rekap Penjualan Sistem',
+  },
+  {
+    src: '/image/K5.webp',
+    tag: 'Struk Thermal',
+    title: 'Riwayat Transaksi & Cetak Struk POS',
+    subtitle: 'Dukungan Cetak Bukti Sewa ke Printer Bluetooth 58/80mm',
+  },
+];
+
 export default function Hero({ onDownloadClick, onOpenModal }) {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Preload seluruh screenshot agar transisi instan tanpa jeda/flicker
+  useEffect(() => {
+    APK_SCREENSHOTS.forEach((item) => {
+      const img = new Image();
+      img.src = item.src;
+    });
+  }, []);
+
+  // Auto-cycle gambar setiap 3.5 detik (pause saat kursor di atas tablet)
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % APK_SCREENSHOTS.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setCurrentIdx((prev) => (prev - 1 + APK_SCREENSHOTS.length) % APK_SCREENSHOTS.length);
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setCurrentIdx((prev) => (prev + 1) % APK_SCREENSHOTS.length);
+  };
+
+  const activeImage = APK_SCREENSHOTS[currentIdx];
+
   return (
     <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-white bg-grid-pattern border-b border-zinc-200/70">
       
@@ -123,57 +243,116 @@ export default function Hero({ onDownloadClick, onOpenModal }) {
 
           </div>
 
-          {/* Right Column: Sleek Tablet Mockup */}
-          <div className="lg:col-span-5 relative flex justify-center">
+          {/* Right Column: Sleek Tablet Mockup with Auto-Cycling Screenshots */}
+          <div className="lg:col-span-5 relative flex justify-center py-6 sm:py-8">
             
             <div
-              onClick={() => onOpenModal('/image/0.webp', 'CampRent POS Login & Offline-Ready', 'Antarmuka Login Aman dengan dukungan SQLite Offline-First')}
-              className="relative cursor-pointer group max-w-[340px] sm:max-w-[380px] w-full"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+              onClick={() => onOpenModal(activeImage.src, activeImage.title, activeImage.subtitle)}
+              className="relative cursor-pointer group max-w-[340px] sm:max-w-[380px] w-full select-none"
             >
               {/* Device outer frame with crisp dark bezel creating contrast */}
-              <div className="relative rounded-[32px] p-2 bg-zinc-900 border border-zinc-700 shadow-2xl transition-all duration-300 group-hover:shadow-emerald-900/20">
+              <div className="relative rounded-[32px] p-2 bg-zinc-900 border border-zinc-700 shadow-2xl transition-all duration-300 group-hover:shadow-emerald-900/30">
                 
                 {/* Speaker pill */}
-                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-14 h-1 bg-zinc-700 rounded-full z-20"></div>
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-14 h-1 bg-zinc-700 rounded-full z-20" />
 
                 {/* Tablet Screen */}
                 <div className="relative rounded-[26px] overflow-hidden bg-black border border-zinc-800 aspect-[3/4.2]">
-                  <img
-                    src="/image/0.webp"
-                    alt="CampRent POS Tablet Interface"
-                    className="w-full h-full object-cover object-top"
-                  />
                   
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="px-3.5 py-1.5 text-xs font-semibold text-zinc-950 bg-white rounded-full shadow-lg">
-                      Klik untuk Perbesar
+                  {/* Layered crossfade images */}
+                  {APK_SCREENSHOTS.map((item, idx) => (
+                    <img
+                      key={item.src}
+                      src={item.src}
+                      alt={item.title}
+                      className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out ${
+                        idx === currentIdx ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                      }`}
+                    />
+                  ))}
+                  
+                  {/* Floating active badge on top of screen */}
+                  <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5">
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-black/75 text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-xs">
+                      {activeImage.tag}
+                    </span>
+                    <span className="px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold bg-black/60 text-white/80 backdrop-blur-md">
+                      {currentIdx + 1}/{APK_SCREENSHOTS.length}
+                    </span>
+                  </div>
+
+                  {/* Manual Arrow Controls (appear on hover) */}
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    aria-label="Screenshot Sebelumnya"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-xs cursor-pointer border border-white/20"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    aria-label="Screenshot Selanjutnya"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-xs cursor-pointer border border-white/20"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+
+                  {/* Mini Slide Dots at bottom inside tablet */}
+                  <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md">
+                    {APK_SCREENSHOTS.map((item, idx) => (
+                      <button
+                        key={item.src}
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentIdx(idx);
+                        }}
+                        aria-label={`Ke slide ${idx + 1}`}
+                        className={`transition-all rounded-full cursor-pointer ${
+                          idx === currentIdx
+                            ? 'w-4 h-1.5 bg-emerald-400'
+                            : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/80'
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Hover overlay with 'Klik untuk Perbesar' */}
+                  <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-15 pointer-events-none">
+                    <span className="px-3 py-1.5 text-xs font-semibold text-zinc-950 bg-white/95 rounded-full shadow-lg backdrop-blur-xs flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      Klik untuk Perbesar Layar
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Floating Card 1: Rental Transaction */}
-              <div className="absolute -top-3 -left-4 sm:-left-8 bg-white/95 backdrop-blur-md border border-zinc-200 p-3 rounded-xl shadow-xl flex items-center gap-3 max-w-[210px]">
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-800 shrink-0">
-                  <Layers className="w-4 h-4 stroke-[2]" />
+              {/* Floating Card 1: Rental Transaction (Ditempatkan di luar batas atas-kiri frame agar layar bebas terhalang) */}
+              <div className="absolute -top-6 -left-3 sm:-left-12 lg:-left-16 bg-white/95 backdrop-blur-md border border-zinc-200/90 py-2 px-3 sm:py-2.5 sm:px-3.5 rounded-xl shadow-lg flex items-center gap-2.5 max-w-[190px] sm:max-w-[210px] z-30 transition-all duration-300 group-hover:opacity-20 pointer-events-none">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-800 shrink-0">
+                  <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2]" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider">Durasi 3 Hari</p>
-                  <p className="text-xs font-bold text-zinc-900 leading-tight">Tenda Dome 4P + Kompor</p>
-                  <p className="text-[10px] text-zinc-600 font-medium">DP Rp 75.000 (Lunas)</p>
+                  <p className="text-[9px] text-emerald-700 font-bold uppercase tracking-wider">Durasi 3 Hari</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-zinc-900 leading-tight">Tenda Dome 4P + Kompor</p>
+                  <p className="text-[9px] sm:text-[10px] text-zinc-500 font-medium">DP Rp 75.000 (Lunas)</p>
                 </div>
               </div>
 
-              {/* Floating Card 2: Offline-First Status */}
-              <div className="absolute -bottom-4 -right-3 sm:-right-6 bg-white/95 backdrop-blur-md border border-zinc-200 p-3 rounded-xl shadow-xl flex items-center gap-3 max-w-[210px]">
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-800 shrink-0">
-                  <WifiOff className="w-4 h-4 stroke-[2]" />
+              {/* Floating Card 2: Offline-First Status (Ditempatkan di luar batas bawah-kanan frame agar layar bebas terhalang) */}
+              <div className="absolute -bottom-6 -right-3 sm:-right-10 lg:-right-14 bg-white/95 backdrop-blur-md border border-zinc-200/90 py-2 px-3 sm:py-2.5 sm:px-3.5 rounded-xl shadow-lg flex items-center gap-2.5 max-w-[190px] sm:max-w-[210px] z-30 transition-all duration-300 group-hover:opacity-20 pointer-events-none">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-800 shrink-0">
+                  <WifiOff className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2]" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider">Mode Offline</p>
-                  <p className="text-xs font-bold text-zinc-900 leading-tight">Siap Bertransaksi</p>
-                  <p className="text-[10px] text-zinc-600 font-medium">Auto-Sync Saat Online</p>
+                  <p className="text-[9px] text-emerald-700 font-bold uppercase tracking-wider">Mode Offline</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-zinc-900 leading-tight">Siap Bertransaksi</p>
+                  <p className="text-[9px] sm:text-[10px] text-zinc-500 font-medium">Auto-Sync Saat Online</p>
                 </div>
               </div>
 
